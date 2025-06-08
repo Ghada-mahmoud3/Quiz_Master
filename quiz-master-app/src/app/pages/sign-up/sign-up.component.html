@@ -1,1 +1,81 @@
-<p>sign-up works!</p>
+<div class="auth-container">
+  <app-auth-form>
+    <div class="auth-header">
+      <h1 class="auth-title">Create an account</h1>
+      <p class="auth-subtitle">
+        Already have an account? <a routerLink="/log-in" class="auth-link">Log in</a>
+      </p>
+    </div>
+
+    <form [formGroup]="signupForm" (ngSubmit)="onSubmit()" class="auth-form">
+      <div class="form-group">
+        <label for="email" class="form-label">Email</label>
+        <input type="email" id="email" formControlName="email" class="form-input" required />
+      </div>
+
+      <div class="form-group">
+        <label for="username" class="form-label">User Name</label>
+        <input type="text" id="username" formControlName="username" class="form-input" required />
+        <p class="form-hint">
+          We strongly recommend adding a phone number. This will help verify your account and keep it safe.
+        </p>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">I am a</label>
+        <div class="user-type-selector">
+          <label class="user-type-option" [class.selected]="signupForm.get('userType')?.value === 'student'">
+            <input type="radio" name="userType" value="student" formControlName="userType" />
+            <span class="user-type-text">Student</span>
+          </label>
+          <label class="user-type-option" [class.selected]="signupForm.get('userType')?.value === 'teacher'">
+            <input type="radio" name="userType" value="teacher" formControlName="userType" />
+            <span class="user-type-text">Teacher</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="password-label-container">
+          <label for="password" class="form-label">Password</label>
+          <button type="button" (click)="togglePasswordVisibility()" class="password-toggle">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path *ngIf="showPassword"
+                d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24M1 1l22 22"
+                stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              <ng-container *ngIf="!showPassword">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" stroke="currentColor" strokeWidth="2"
+                  strokeLinecap="round" strokeLinejoin="round" />
+                <circle cx="12" cy="12" r="3" stroke="currentColor" strokeWidth="2" strokeLinecap="round"
+                  strokeLinejoin="round" />
+              </ng-container>
+            </svg>
+            {{ showPassword ? 'Hide' : 'Show' }}
+          </button>
+        </div>
+        <input [type]="showPassword ? 'text' : 'password'" id="password" formControlName="password" class="form-input"
+          required />
+        <div class="password-requirements">
+          <div class="requirement-row">
+            <span class="requirement-item">• Use 8 or more characters</span>
+            <span class="requirement-item">• Use upper and lower case letters (e.g. Aa)</span>
+          </div>
+          <div class="requirement-row">
+            <span class="requirement-item">• Use a number (e.g. 1234)</span>
+            <span class="requirement-item">• Use a symbol</span>
+          </div>
+        </div>
+      </div>
+
+      <button type="submit" class="submit-button" [disabled]="!signupForm.valid">
+        Sign up
+      </button>
+
+      <p class="terms-text">
+        By creating an account, you agree to the
+        <a href="#" class="terms-link">Terms of use</a> and
+        <a href="#" class="terms-link">Privacy Policy</a>.
+      </p>
+    </form>
+  </app-auth-form>
+</div>
