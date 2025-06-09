@@ -1,40 +1,40 @@
 <div class="auth-container">
   <app-auth-form>
+    <!-- Signup Header -->
     <div class="auth-header">
       <h1 class="auth-title">Create an account</h1>
       <p class="auth-subtitle">
-        Already have an account? <a routerLink="/log-in" class="auth-link">Log in</a>
+        Already have an account? <a routerLink="/login" class="auth-link">Log in</a>
       </p>
     </div>
-
-    <form [formGroup]="signupForm" (ngSubmit)="onSubmit()" class="auth-form">
+    <!-- Signup Form -->
+    <form [formGroup]="signupForm" (ngSubmit)="onSubmit()" class="auth-form">      
+      <!-- Role -->
       <div class="form-group">
-        <label for="email" class="form-label">Email</label>
-        <input type="email" id="email" formControlName="email" class="form-input" required />
-      </div>
-
-      <div class="form-group">
-        <label for="username" class="form-label">User Name</label>
-        <input type="text" id="username" formControlName="username" class="form-input" required />
-        <p class="form-hint">
-          We strongly recommend adding a phone number. This will help verify your account and keep it safe.
-        </p>
-      </div>
-
-      <div class="form-group">
-        <label class="form-label">I am a</label>
         <div class="user-type-selector">
-          <label class="user-type-option" [class.selected]="signupForm.get('userType')?.value === 'student'">
-            <input type="radio" name="userType" value="student" formControlName="userType" />
+          <label class="user-type-option" [class.selected]="signupForm.get('role')?.value === 'student'">
+            <input type="radio" name="role" value="student" formControlName="role" />
             <span class="user-type-text">Student</span>
           </label>
-          <label class="user-type-option" [class.selected]="signupForm.get('userType')?.value === 'teacher'">
-            <input type="radio" name="userType" value="teacher" formControlName="userType" />
+          <label class="user-type-option" [class.selected]="signupForm.get('role')?.value === 'teacher'">
+            <input type="radio" name="role" value="teacher" formControlName="role" />
             <span class="user-type-text">Teacher</span>
           </label>
         </div>
       </div>
+      <!-- Name -->
+      <div class="form-group">
+        <label for="username" class="form-label">User Name</label>
+        <input type="text" id="username" formControlName="name" class="form-input" placeholder="enter your name" required />
+      </div>
+      
+      <!-- Email -->
+      <div class="form-group">
+        <label for="email" class="form-label">Email</label>
+        <input type="email" id="email" formControlName="email" class="form-input" placeholder="enter your email" required />
+      </div>
 
+      <!-- Password -->
       <div class="form-group">
         <div class="password-label-container">
           <label for="password" class="form-label">Password</label>
@@ -54,27 +54,28 @@
           </button>
         </div>
         <input [type]="showPassword ? 'text' : 'password'" id="password" formControlName="password" class="form-input"
-          required />
-        <div class="password-requirements">
+          placeholder="enter your password" required />
+        
+        <!-- <div class="password-requirements">
           <div class="requirement-row">
             <span class="requirement-item">• Use 8 or more characters</span>
-            <span class="requirement-item">• Use upper and lower case letters (e.g. Aa)</span>
+            <span class="requirement-item">• Use upper and lower case letters</span>
           </div>
           <div class="requirement-row">
-            <span class="requirement-item">• Use a number (e.g. 1234)</span>
+            <span class="requirement-item">• Use at least one number</span>
             <span class="requirement-item">• Use a symbol</span>
           </div>
-        </div>
-      </div>
+        </div> -->
 
+      </div>
+      <!-- Submit -->
       <button type="submit" class="submit-button" [disabled]="!signupForm.valid">
         Sign up
       </button>
 
       <p class="terms-text">
         By creating an account, you agree to the
-        <a href="#" class="terms-link">Terms of use</a> and
-        <a href="#" class="terms-link">Privacy Policy</a>.
+        <a href="#" class="terms-link">Terms of use</a> and <a href="#" class="terms-link">Privacy Policy</a>.
       </p>
     </form>
   </app-auth-form>

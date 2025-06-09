@@ -3,23 +3,24 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AuthFormComponent } from '../../components/auth-form/auth-form.component';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
-  selector: 'app-sign-up',
+  selector: 'app-signup',
   imports: [CommonModule, ReactiveFormsModule, RouterModule, AuthFormComponent],
-  templateUrl: './sign-up.component.html',
-  styleUrl: './sign-up.component.css'
+  templateUrl: './signup.component.html',
+  styleUrl: './signup.component.css'
 })
 export class SignUpComponent {
   showPassword = false;
   signupForm!: FormGroup;
 
-  constructor(private fb: FormBuilder, private router: Router) {
+  constructor(private fb: FormBuilder, private router: Router, private auth: AuthService) {
     this.signupForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
-      username: ['', Validators.required],
+      name: ['', Validators.required],
       password: ['', Validators.required],
-      userType: ['student', Validators.required]
+      role: ['student', Validators.required]
     });
   }
 
@@ -31,6 +32,18 @@ export class SignUpComponent {
     if (this.signupForm.valid) {
       console.log('Signup data:', this.signupForm.value);
       // Handle signup logic here
+      const { email, password, name, role } = this.signupForm.value;
+
+      this.auth.signup(email!, password!, name!, role!).subscribe({
+        next: (user) => {
+          localStorage.setItem('token', user.token);
+          localStorage.setItem('token', user.role);
+          this.router.navigate([`/login`]);
+        },
+        error: (err) => {
+          console.error('signup failed:', err);
+        }
+      });
     }
   }
 }
