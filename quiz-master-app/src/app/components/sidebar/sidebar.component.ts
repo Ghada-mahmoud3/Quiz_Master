@@ -1,37 +1,35 @@
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-sidebar',
-  imports: [RouterLink, CommonModule, RouterLinkActive],
+  standalone: true,
+  imports: [CommonModule, RouterLink, RouterLinkActive],
   templateUrl: './sidebar.component.html',
-  styleUrl: './sidebar.component.css'
+  styleUrls: ['./sidebar.component.css']
 })
 export class SidebarComponent {
-  @Input() isMinimized: boolean = false;
-  @Input() isVisible: boolean = true;
+  @Input() visible: boolean = true;
+  @Input() minimized: boolean = false;
+  @Output() toggle = new EventEmitter<void>();
+  @Output() minimize = new EventEmitter<void>();
 
-  constructor(private authService: AuthService) { }
-  sidebarVisible = true;
-  sidebarMinimized = false;
-  isToggled = true;
-  
-  toggleIcon() {
-    this.isToggled = !this.isToggled;
-  }
-  toggleSidebar() {
-    this.sidebarVisible = !this.sidebarVisible;
+  constructor(private authService: AuthService) {}
+
+  onToggle() {
+    this.toggle.emit();
   }
 
-  toggleMinimize() {
-    this.sidebarMinimized = !this.sidebarMinimized;
+  onMinimize() {
+    this.minimize.emit();
   }
 
   isLoggedIn(): boolean {
     return !!localStorage.getItem('token');
   }
+
   logout() {
     this.authService.logout();
   }

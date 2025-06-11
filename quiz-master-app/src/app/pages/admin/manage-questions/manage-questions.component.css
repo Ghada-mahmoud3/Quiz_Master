@@ -1,0 +1,59 @@
+.container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+.card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  padding: 1.5rem;
+}
+.question-list {
+  margin: 1rem 0;
+}
+.question-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+}
+.question-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+.nav-buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.modal-dialog {
+  max-width: 500px;
+  width: 100%;
+}
+.modal-content {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+}
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.btn-close {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}

@@ -1,70 +1,72 @@
-<div class="layout">
-  <app-sidebar [isMinimized]="sidebarMinimized" [isVisible]="sidebarVisible"></app-sidebar>
+<div class="flex min-h-screen bg-gray-100">
+  <app-sidebar 
+    [visible]="sidebarVisible" 
+    [minimized]="sidebarMinimized" 
+    (toggle)="toggleSidebar()" 
+    (minimize)="toggleMinimize()">
+  </app-sidebar>
 
-  <div class="main-content" [class.minimized]="sidebarMinimized">
+  <div class="flex-1 p-6">
+    <h1 class="text-2xl font-bold text-gray-800 mb-6">Student Dashboard</h1>
 
-    <header class="header">
-      <button class="minimize-btn" (click)="toggleMinimize()" (click)="toggleIcon()" style="cursor: pointer;">
-        <i *ngIf="!isToggled" class="fa-solid fa-angles-right"></i>
-        <i *ngIf="isToggled" class="fa-solid fa-angles-left"></i>
-      </button>
-      <div class="user-info">
-        <strong>Student Dashboard</strong>
+    <div class="grid grid-cols-4 gap-4 mb-8">
+      <div class="bg-white p-4 rounded-lg shadow">
+        <p class="text-lg font-semibold">{{ stats.enrolledCourses }}</p>
+        <p class="text-gray-600">Enrolled Courses</p>
       </div>
-    </header>
-
-    <div class="page-content">
-      <div class="max-w-7xl mx-8">
-        <div
-          class="bg-gradient-to-r from-purple-600 to-indigo-600 my-2 text-white rounded-xl p-6 flex flex-col md:flex-row justify-between items-center shadow-sm">
-          <!-- Image Section -->
-          <div class="md:w-2/5 flex justify-center">
-            <img src="/online-certification-illustration.png" alt="Learning achievement illustration"
-              class="h-40 md:h-52 object-contain" />
-          </div>
-
-          <!-- Text Section -->
-          <div class="md:w-3/5 mb-4 md:mb-0 md:pl-6">
-            <h2 class="text-2xl md:text-3xl font-bold mb-3">Hi Robert Fox! 👋</h2>
-            <p class="text-purple-100 text-base md:text-lg leading-relaxed">
-              Welcome to the Master Exam Platform!
-              Get ready to explore, practice, and ace your exams with confidence — you’ve got this!
-            </p>
-          </div>
-        </div>
+      <div class="bg-white p-4 rounded-lg shadow">
+        <p class="text-lg font-semibold">{{ stats.completedExams }}</p>
+        <p class="text-gray-600">Completed Exams</p>
       </div>
-
-      <!-- Upcoming Exams Section -->
-      <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 mx-8">
-        <div class="flex justify-between items-center mb-6">
-          <h2 class="text-xl font-semibold text-gray-800">Upcoming Exams</h2>
-          <a routerLink="/student/exams" class="text-sm text-indigo-600 hover:underline">View All</a>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div *ngFor="let exam of upcomingExams"
-            class="border border-gray-200 rounded-lg p-4 hover:border-indigo-300 transition">
-            <div class="flex gap-3 mb-3">
-              <img [src]="getSubjectIcon(exam.subject)" [alt]="exam.subject" class="w-16 h-16" />
-              <div>
-                <h3 class="font-medium text-gray-800">{{ exam.title }}</h3>
-                <p class="text-xs text-gray-500">{{ exam.subject }}</p>
-              </div>
-            </div>
-
-            <div class="flex justify-between text-sm mb-3">
-              <span class="text-gray-600">{{ exam.questions.length }} Questions</span>
-              <span class="text-gray-600">{{ exam.duration }} mins</span>
-            </div>
-            <div class="flex justify-end items-center">
-              <button [routerLink]="['/student/exam', exam.id]"
-                class="text-sm bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-1 rounded">
-                Start
-              </button>
-            </div>
-          </div>
-        </div>
+      <div class="bg-white p-4 rounded-lg shadow">
+        <p class="text-lg font-semibold">{{ stats.averageScore }}%</p>
+        <p class="text-gray-600">Average Score</p>
       </div>
+      <div class="bg-white p-4 rounded-lg shadow">
+        <p class="text-lg font-semibold">{{ stats.attendance }}</p>
+        <p class="text-gray-600">Attendance</p>
+      </div>
+    </div>
+
+    <h2 class="text-xl font-semibold mb-4">Upcoming Exams</h2>
+    <div class="grid grid-cols-3 gap-4 mb-8">
+      <div *ngFor="let exam of upcomingExams" class="bg-white p-4 rounded-lg shadow">
+        <div class="flex items-center mb-2">
+          <img [src]="getSubjectIcon(exam.subject)" class="w-6 h-6 mr-2" alt="Subject Icon">
+          <p class="font-semibold">{{ exam.title }}</p>
+        </div>
+        <p class="text-gray-600">Subject: {{ exam.subject }}</p>
+        <p class="text-gray-600">Duration: {{ exam.duration }} minutes</p>
+        <p class="text-gray-600">Due: {{ exam.dueDate }}</p>
+        <div [ngClass]="getDueDateClass(getDaysLeft(exam.dueDate))" class="px-2 py-1 rounded text-xs mt-2 inline-block">
+          {{ getDaysLeft(exam.dueDate) }} days left
+        </div>
+        <a [routerLink]="['/student/exam', exam.id]" class="mt-2 inline-block text-indigo-600 hover:underline">Start Exam</a>
+      </div>
+    </div>
+
+    <h2 class="text-xl font-semibold mb-4">Recent Results</h2>
+    <div class="bg-white rounded-lg shadow overflow-hidden">
+      <table class="w-full">
+        <thead class="bg-gray-50">
+          <tr>
+            <th class="px-6 py-3 text-left text-gray-600">Exam</th>
+            <th class="px-6 py-3 text-left text-gray-600">Score</th>
+            <th class="px-6 py-3 text-left text-gray-600">Date</th>
+            <th class="px-6 py-3 text-left text-gray-600">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let result of recentResults" class="border-t">
+            <td class="px-6 py-4">{{ result.title }}</td>
+            <td class="px-6 py-4" [ngClass]="getPerformanceClass(result.score)">{{ result.score }}%</td>
+            <td class="px-6 py-4">{{ result.date }}</td>
+            <td class="px-6 py-4">
+              <a [routerLink]="['/student/result', result.examId]" class="text-indigo-600 hover:underline">View Details</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>

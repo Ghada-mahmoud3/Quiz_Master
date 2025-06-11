@@ -4,24 +4,42 @@ import { SidebarComponent } from '../../../components/sidebar/sidebar.component'
 import { CommonModule } from '@angular/common';
 import { ExamService } from '../../../services/exam.service';
 import { RouterLink } from '@angular/router';
+import { Exam } from '../../../models/exam.model';
 
 @Component({
   selector: 'app-student-exam-list',
+  standalone: true,
   imports: [SidebarComponent, CommonModule, RouterLink],
   templateUrl: './student-exam-list.component.html',
-  styleUrl: './student-exam-list.component.css'
+  styleUrls: ['./student-exam-list.component.css']
 })
 export class StudentExamListComponent implements OnInit {
-  constructor(private auth: AuthService, private examService: ExamService) { }
-
   sidebarVisible = true;
   sidebarMinimized = false;
   isToggled = true;
-  exams: any[] = []
+  exams: any[] = [];
+
+  constructor(private auth: AuthService, private examService: ExamService) {}
+
+  ngOnInit() {
+    this.examService.getExams().subscribe({
+      next: (exams) => {
+        this.exams = exams.map((exam: Exam) => ({
+          id: exam.id,
+          title: exam['exam-name'],
+          subject: exam.category,
+          duration: exam.time,
+          questions: exam.questions
+        }));
+      },
+      error: (err) => console.error('Failed to load exams:', err)
+    });
+  }
 
   toggleIcon() {
     this.isToggled = !this.isToggled;
   }
+
   toggleSidebar() {
     this.sidebarVisible = !this.sidebarVisible;
   }
@@ -29,9 +47,7 @@ export class StudentExamListComponent implements OnInit {
   toggleMinimize() {
     this.sidebarMinimized = !this.sidebarMinimized;
   }
-  ngOnInit() {
-    this.exams = this.examService.getAllExams();
-  }
+
   getSubjectIcon(subject: string): string {
     const icons: { [key: string]: string } = {
       'Mathematics': 'https://cdn-icons-png.flaticon.com/512/2201/2201570.png',
@@ -41,5 +57,4 @@ export class StudentExamListComponent implements OnInit {
     };
     return icons[subject] || 'https://cdn-icons-png.flaticon.com/512/2913/2913109.png';
   }
-
 }

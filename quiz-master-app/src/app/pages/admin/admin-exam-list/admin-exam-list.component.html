@@ -1,1 +1,20 @@
-<p>admin-exam-list works!</p>
+<div class="container">
+  <div class="card">
+    <h2>Exam List</h2>
+    <button class="btn btn-primary mb-3" routerLink="/admin/exams/new">Add New Exam</button>
+    <div *ngIf="exams.length === 0" class="alert alert-info">No exams available.</div>
+    <div class="exam-list">
+      <div *ngFor="let exam of exams" class="exam-card card mb-2">
+        <div>
+          <h3>{{ exam['exam-name'] }}</h3>
+          <p>Category: {{ exam.category }} | Questions: {{ exam['questions-number'] }} | Pass Mark: {{ exam['pass-mark'] }}% | Time: {{ exam.time }} minutes</p>
+        </div>
+        <div class="exam-actions">
+          <button class="btn btn-secondary me-2" [routerLink]="['/admin/exams', exam.id, 'edit']">Edit Questions</button>
+          <button class="btn btn-danger" (click)="deleteExam(exam.id)">Delete</button>
+        </div>
+      </div>
+    </div>
+    <button class="btn btn-outline-secondary" routerLink="/admin/dashboard">Back to Dashboard</button>
+  </div>
+</div>

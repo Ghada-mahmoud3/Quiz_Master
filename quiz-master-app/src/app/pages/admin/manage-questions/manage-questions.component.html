@@ -1,1 +1,102 @@
-<p>manage-questions works!</p>
+<div class="container">
+  <div class="card">
+    <h2>Edit Exam: {{ exam?.['exam-name'] }}</h2>
+    <button class="btn btn-primary mb-3" (click)="showEditInfoModal()">Edit Exam Info</button>
+    <h3>Questions</h3>
+    <div *ngIf="exam && exam.questions && exam.questions.length === 0" class="alert alert-info">No questions added.</div>
+    <div class="question-list" *ngIf="exam && exam.questions">
+      <div *ngFor="let question of exam.questions; let i = index" class="question-card card mb-2">
+        <div>
+          <p><strong>Question {{ question['q-number'] }}:</strong> {{ question['q-name'] }} ({{ question.points }} points)</p>
+          <p>Options: {{ question.options.join(', ') }}</p>
+          <p>Correct Answer: {{ question['correct-answer'] }}</p>
+        </div>
+        <div class="question-actions">
+          <button class="btn btn-secondary me-2" (click)="editQuestion(i)">Edit</button>
+          <button class="btn btn-danger" (click)="deleteQuestion(i)">Delete</button>
+        </div>
+      </div>
+    </div>
+    <h3>Add New Question</h3>
+    <div *ngIf="questionForm.invalid && (questionForm.touched || questionForm.dirty)" class="alert alert-danger">
+      Please fill all required fields correctly:
+      <ul>
+        <li *ngIf="questionForm.get('qName')?.errors">Question text is required.</li>
+        <li *ngIf="questionForm.get('points')?.errors">Points must be a positive number.</li>
+        <li *ngFor="let option of options.controls; let i = index">
+          <span *ngIf="option.errors && option.touched">Option {{i + 1}} is required.</span>
+        </li>
+        <li *ngIf="questionForm.get('correctAnswer')?.errors && questionForm.get('correctAnswer')?.touched">Correct answer is required.</li>
+      </ul>
+    </div>
+    <form [formGroup]="questionForm" (ngSubmit)="addQuestion()">
+      <div class="form-group mb-3">
+        <label for="q-name" class="form-label">Question Text</label>
+        <input id="q-name" formControlName="qName" class="form-control" placeholder="Enter question" required>
+      </div>
+      <div class="form-group mb-3">
+        <label for="points" class="form-label">Points</label>
+        <input id="points" type="number" formControlName="points" class="form-control" min="1" required>
+      </div>
+      <div class="form-group mb-3" *ngFor="let option of options.controls; let i = index">
+        <label for="option{{i}}" class="form-label">Option {{i + 1}}</label>
+        <input id="option{{i}}" formControlName="{{i}}" class="form-control" placeholder="Enter option" required>
+      </div>
+      <div class="form-group mb-3">
+        <label for="correct-answer" class="form-label">Correct Answer</label>
+        <select id="correct-answer" formControlName="correctAnswer" class="form-control" required>
+          <option value="">Select an option</option>
+          <option *ngFor="let option of options.value" [value]="option" [disabled]="!option">{{ option || 'Enter an option first' }}</option>
+        </select>
+      </div>
+      <div class="nav-buttons">
+        <button type="submit" class="btn btn-primary" [disabled]="!questionForm.valid">{{ editQuestionIndex !== null ? 'Update Question' : 'Add Question' }}</button>
+        <button type="button" class="btn btn-outline-secondary" (click)="resetQuestionForm()">Cancel</button>
+      </div>
+    </form>
+    <button class="btn btn-outline-secondary mt-3" routerLink="/admin/exams">Back to Exam List</button>
+  </div>
+
+  <div class="modal" *ngIf="showModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Edit Exam Info</h5>
+          <button type="button" class="btn-close" (click)="showModal = false"></button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="examForm" (ngSubmit)="updateExamInfo()">
+            <div class="form-group mb-3">
+              <label for="exam-name" class="form-label">Exam Name</label>
+              <input id="exam-name" formControlName="examName" class="form-control" required>
+            </div>
+            <div class="form-group mb-3">
+              <label for="description" class="form-label">Description</label>
+              <textarea id="description" formControlName="description" class="form-control" rows="4"></textarea>
+            </div>
+            <div class="form-group mb-3">
+              <label for="category" class="form-label">Category</label>
+              <input id="category" formControlName="category" class="form-control" required>
+            </div>
+            <div class="form-group mb-3">
+              <label for="attempt-number" class="form-label">Number of Attempts</label>
+              <input id="attempt-number" type="number" formControlName="attemptNumber" class="form-control" min="1" required>
+            </div>
+            <div class="form-group mb-3">
+              <label for="pass-mark" class="form-label">Pass Mark (%)</label>
+              <input id="pass-mark" type="number" formControlName="passMark" class="form-control" min="0" max="100" required>
+            </div>
+            <div class="form-group mb-3">
+              <label for="time" class="form-label">Time (Minutes)</label>
+              <input id="time" type="number" formControlName="time" class="form-control" min="1" required>
+            </div>
+            <div class="nav-buttons">
+              <button type="submit" class="btn btn-primary" [disabled]="!examForm.valid">Save Changes</button>
+              <button type="button" class="btn btn-outline-secondary" (click)="showModal = false">Cancel</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

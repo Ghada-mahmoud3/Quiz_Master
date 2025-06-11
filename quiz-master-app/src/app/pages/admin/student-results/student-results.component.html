@@ -1,1 +1,19 @@
-<p>student-results works!</p>
+<div class="container">
+  <div class="card">
+    <h2>Student Results</h2>
+    <div *ngIf="results.length === 0" class="alert alert-info">No student results available.</div>
+    <div class="result-list">
+      <div *ngFor="let result of results" class="result-card card mb-2">
+        <div>
+          <p><strong>Student:</strong> {{ result.studentName }} (ID: {{ result.studentId }})</p>
+          <p><strong>Exam:</strong> {{ result['exam-name'] }}</p>
+          <p><strong>Score:</strong> {{ result.score }}</p>
+          <p><strong>Status:</strong> {{ result.status }}</p>
+          <p><strong>Date:</strong> {{ result['completed-date'] }}</p>
+          <p><strong>Attempt:</strong> {{ result['attempt-number'] }}</p>
+        </div>
+      </div>
+    </div>
+    <button class="btn btn-outline-secondary" routerLink="/admin/dashboard">Back to Dashboard</button>
+  </div>
+</div>

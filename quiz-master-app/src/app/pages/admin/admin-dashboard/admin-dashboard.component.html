@@ -1,2 +1,15 @@
-<p>admin-dashboard works!</p>
-<button *ngIf="isLoggedIn()" (click)="logout()">Logout</button>
+<div class="container">
+  <div class="card">
+    <h2>Admin Dashboard</h2>
+    <p>Welcome, {{ teacherName }}!</p>
+    <div class="summary">
+      <p>You have created {{ exams.length }} exam(s).</p>
+    </div>
+    <div class="nav-buttons">
+      <button class="btn btn-primary" routerLink="/admin/exams">Manage Exams</button>
+      <button class="btn btn-primary" routerLink="/admin/exams/new">Create New Exam</button>
+      <button class="btn btn-primary" routerLink="/admin/student-results">View Student Results</button>
+      <button class="btn btn-outline-secondary" (click)="logout()">Logout</button>
+    </div>
+  </div>
+</div>

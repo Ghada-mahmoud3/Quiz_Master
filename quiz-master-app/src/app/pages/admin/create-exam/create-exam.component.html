@@ -1,1 +1,35 @@
-<p>create-exam works!</p>
+<div class="container">
+  <div class="card">
+    <h2>Create New Exam</h2>
+    <form [formGroup]="examForm" (ngSubmit)="onSubmit()">
+      <div class="form-group mb-3">
+        <label for="exam-name" class="form-label">Exam Name</label>
+        <input id="exam-name" formControlName="examName" class="form-control" placeholder="Enter exam name" required>
+      </div>
+      <div class="form-group mb-3">
+        <label for="description" class="form-label">Description</label>
+        <textarea id="description" formControlName="description" class="form-control" placeholder="Enter description" rows="4"></textarea>
+      </div>
+      <div class="form-group mb-3">
+        <label for="category" class="form-label">Category</label>
+        <input id="category" formControlName="category" class="form-control" placeholder="Enter category" required>
+      </div>
+      <div class="form-group mb-3">
+        <label for="attempt-number" class="form-label">Number of Attempts</label>
+        <input id="attempt-number" type="number" formControlName="attemptNumber" class="form-control" min="1" required>
+      </div>
+      <div class="form-group mb-3">
+        <label for="pass-mark" class="form-label">Pass Mark (%)</label>
+        <input id="pass-mark" type="number" formControlName="passMark" class="form-control" min="0" max="100" required>
+      </div>
+      <div class="form-group mb-3">
+        <label for="time" class="form-label">Time (Minutes)</label>
+        <input id="time" type="number" formControlName="time" class="form-control" min="1" required>
+      </div>
+      <div class="nav-buttons">
+        <button type="submit" class="btn btn-primary" [disabled]="!examForm.valid">Create Exam</button>
+        <button type="button" class="btn btn-outline-secondary" routerLink="/admin/exams">Back to Exam List</button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,96 +1,72 @@
 <div class="max-w-4xl mx-auto p-6 bg-gray-50 min-h-screen">
   <div class="bg-white rounded-xl shadow-md p-6">
-    <!-- Exam Header -->
-    <div class="flex justify-between items-center mb-6">
-      <h1 class="text-2xl font-bold text-gray-800">{{ exam?.title }}</h1>
-      <div class="bg-red-100 text-red-800 px-4 py-2 rounded-lg font-medium">
-        Time Left: {{ formatTime(timeLeft) }}
-      </div>
+    <h1 class="text-2xl font-bold text-gray-800">{{ exam?.title }}</h1>
+    <div class="flex justify-between items-center mb-4">
+      <p class="text-gray-600">Time Left: {{ formatTime(timeLeft) }}</p>
+      <p class="text-gray-600">Question {{ currentQuestionIndex + 1 }} of {{ exam?.questions?.length || 0 }}</p>
     </div>
 
-    <!-- Progress Bar -->
-    <div class="w-full bg-gray-200 rounded-full h-2.5 mb-6">
-      <div class="bg-indigo-600 h-2.5 rounded-full" 
-           [style.width]="(currentQuestionIndex + 1) / exam?.questions.length * 100 + '%'"></div>
-    </div>
-
-    <!-- Current Question -->
-    <div *ngIf="exam" class="mb-8">
-      <h3 class="text-lg font-semibold mb-4">
-        Question {{ currentQuestionIndex + 1 }} of {{ exam.questions.length }}
-      </h3>
-      <p class="text-gray-700 mb-6">{{ exam.questions[currentQuestionIndex].text }}</p>
-
-      <!-- Options -->
-      <div class="space-y-3">
-        <div *ngFor="let option of exam.questions[currentQuestionIndex].options" class="flex items-center">
-          <input 
-            type="radio" 
-            [id]="'option-' + currentQuestionIndex + '-' + option" 
-            [name]="'question-' + currentQuestionIndex" 
-            [value]="option"
-            [(ngModel)]="answers[currentQuestionIndex]"
-            class="h-4 w-4 text-indigo-600 focus:ring-indigo-500">
-          <label 
-            [for]="'option-' + currentQuestionIndex + '-' + option" 
-            class="ml-3 text-gray-700">
-            {{ option }}
-          </label>
+    <div *ngIf="exam && exam.questions && exam.questions.length > 0; else noQuestions">
+      <div class="mb-8">
+        <p class="text-lg font-semibold text-gray-700 mb-6">{{ exam.questions[currentQuestionIndex].text }}</p>
+        <div class="space-y-4">
+          <div *ngFor="let option of exam.questions[currentQuestionIndex].options" class="flex items-center">
+            <input 
+              type="radio" 
+              [name]="'answer' + currentQuestionIndex" 
+              [value]="option"
+              [(ngModel)]="answers[currentQuestionIndex]"
+              class="mr-2"
+            >
+            <label class="text-gray-700">{{ option }}</label>
+          </div>
         </div>
       </div>
-    </div>
 
-    <!-- Navigation Buttons -->
-    <div class="flex justify-between mt-8">
-      <button 
-        (click)="prevQuestion()" 
-        [disabled]="currentQuestionIndex === 0"
-        class="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg disabled:opacity-50">
-        Previous
-      </button>
-      
-      <div class="space-x-4">
+      <div class="flex justify-between">
         <button 
-          *ngIf="currentQuestionIndex < exam?.questions.length - 1"
-          (click)="nextQuestion()" 
-          class="px-4 py-2 bg-indigo-600 text-white rounded-lg">
+          (click)="prevQuestion()"
+          [disabled]="currentQuestionIndex === 0"
+          class="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg disabled:opacity-50">
+          Previous
+        </button>
+        <button 
+          (click)="nextQuestion()"
+          [disabled]="currentQuestionIndex === exam.questions.length - 1"
+          class="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg disabled:opacity-50">
           Next
         </button>
         <button 
-          *ngIf="currentQuestionIndex === exam?.questions.length - 1"
-          (click)="openSubmitModal()" 
-          class="px-4 py-2 bg-green-600 text-white rounded-lg">
+          (click)="openSubmitModal()"
+          class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700">
           Submit Exam
         </button>
       </div>
     </div>
-  </div>
 
-  <!-- Submit Confirmation Modal -->
-  <div *ngIf="showSubmitModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
-    <div class="bg-white rounded-xl p-6 max-w-md w-full">
-      <h3 class="text-xl font-bold mb-4">Submit Exam?</h3>
-      
-      <div *ngIf="unansweredQuestions.length > 0" class="mb-4">
-        <p class="text-red-600 mb-2">You haven't answered these questions:</p>
-        <ul class="list-disc pl-5">
-          <li *ngFor="let q of unansweredQuestions">Question {{ q + 1 }}</li>
-        </ul>
-      </div>
-      
-      <p class="mb-4">Are you sure you want to submit your exam?</p>
-      
-      <div class="flex justify-end space-x-3">
-        <button 
-          (click)="showSubmitModal = false" 
-          class="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg">
-          Cancel
-        </button>
-        <button 
-          (click)="submitExam()" 
-          class="px-4 py-2 bg-green-600 text-white rounded-lg">
-          Submit Anyway
-        </button>
+    <ng-template #noQuestions>
+      <p class="text-red-600">No questions available for this exam.</p>
+    </ng-template>
+
+    <div *ngIf="showSubmitModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+      <div class="bg-white p-6 rounded-lg shadow-lg max-w-md w-full">
+        <h2 class="text-xl font-bold mb-4">Submit Exam</h2>
+        <p *ngIf="unansweredQuestions.length > 0" class="text-red-600 mb-4">
+          You have {{ unansweredQuestions.length }} unanswered question(s).
+        </p>
+        <p>Are you sure you want to submit your exam?</p>
+        <div class="mt-6 flex justify-end space-x-4">
+          <button 
+            (click)="showSubmitModal = false"
+            class="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg">
+            Cancel
+          </button>
+          <button 
+            (click)="submitExam()"
+            class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700">
+            Submit
+          </button>
+        </div>
       </div>
     </div>
   </div>

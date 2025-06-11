@@ -1,28 +1,216 @@
 {
+  "exams": [
+    {
+      "id": "1",
+      "exam-name": "Mathematics Final Exam",
+      "category": "Mathematics",
+      "time": 60,
+      "dueDate": "2023-12-15",
+      "questions-number": 5,
+      "attempt-number": 1,
+      "pass-mark": 70,
+      "description": "Final exam for Mathematics",
+      "teacherId": "1",
+      "questions": [
+        {
+          "q-name": "What is the value of π (pi) to two decimal places?",
+          "q-number": 1,
+          "points": 10,
+          "options": [
+            "3.14",
+            "3.16",
+            "3.12",
+            "3.18"
+          ],
+          "correct-answer": "3.14"
+        },
+        {
+          "q-name": "Solve for x: 2x + 5 = 15",
+          "q-number": 2,
+          "points": 10,
+          "options": [
+            "5",
+            "10",
+            "7.5",
+            "20"
+          ],
+          "correct-answer": "5"
+        },
+        {
+          "q-name": "What is the area of a circle with radius 5?",
+          "q-number": 3,
+          "points": 10,
+          "options": [
+            "25π",
+            "10π",
+            "50π",
+            "5π"
+          ],
+          "correct-answer": "25π"
+        },
+        {
+          "q-name": "What is the derivative of x²?",
+          "q-number": 4,
+          "points": 10,
+          "options": [
+            "2x",
+            "x",
+            "2",
+            "x³/3"
+          ],
+          "correct-answer": "2x"
+        },
+        {
+          "q-name": "What is the square root of 144?",
+          "q-number": 5,
+          "points": 10,
+          "options": [
+            "12",
+            "14",
+            "16",
+            "18"
+          ],
+          "correct-answer": "12"
+        }
+      ]
+    },
+    {
+      "id": "2",
+      "exam-name": "Physics Midterm Exam",
+      "category": "Physics",
+      "time": 45,
+      "dueDate": "2023-11-20",
+      "questions-number": 3,
+      "attempt-number": 1,
+      "pass-mark": 70,
+      "description": "Midterm exam for Physics",
+      "teacherId": "1",
+      "questions": [
+        {
+          "q-name": "What is the unit of force in the International System of Units?",
+          "q-number": 1,
+          "points": 10,
+          "options": [
+            "Newton",
+            "Joule",
+            "Watt",
+            "Pascal"
+          ],
+          "correct-answer": "Newton"
+        },
+        {
+          "q-name": "Which law states that every action has an equal and opposite reaction?",
+          "q-number": 2,
+          "points": 10,
+          "options": [
+            "Newton's First Law",
+            "Newton's Second Law",
+            "Newton's Third Law",
+            "Ohm's Law"
+          ],
+          "correct-answer": "Newton's Third Law"
+        },
+        {
+          "q-name": "What is the acceleration due to gravity on Earth?",
+          "q-number": 3,
+          "points": 10,
+          "options": [
+            "9.8 m/s²",
+            "6.7 m/s²",
+            "10 m/s²",
+            "8.9 m/s²"
+          ],
+          "correct-answer": "9.8 m/s²"
+        }
+      ]
+    },
+    {
+      "id": "3",
+      "exam-name": "Chemistry Quiz",
+      "category": "Chemistry",
+      "time": 30,
+      "dueDate": "2023-11-10",
+      "questions-number": 3,
+      "attempt-number": 1,
+      "pass-mark": 70,
+      "description": "Quiz for Chemistry",
+      "teacherId": "1",
+      "questions": [
+        {
+          "q-name": "What is the chemical symbol for gold?",
+          "q-number": 1,
+          "points": 10,
+          "options": [
+            "Au",
+            "Ag",
+            "Pb",
+            "Fe"
+          ],
+          "correct-answer": "Au"
+        },
+        {
+          "q-name": "What is the pH value of pure water?",
+          "q-number": 2,
+          "points": 10,
+          "options": [
+            "7",
+            "1",
+            "14",
+            "0"
+          ],
+          "correct-answer": "7"
+        },
+        {
+          "q-name": "Which gas is most abundant in Earth's atmosphere?",
+          "q-number": 3,
+          "points": 10,
+          "options": [
+            "Nitrogen",
+            "Oxygen",
+            "Carbon Dioxide",
+            "Argon"
+          ],
+          "correct-answer": "Nitrogen"
+        }
+      ]
+    },
+    {
+      "id": "v3hzypqpp",
+      "exam-name": "k",
+      "description": "l",
+      "category": "k",
+      "attempt-number": 1,
+      "questions-number": 0,
+      "pass-mark": 70,
+      "time": 30,
+      "teacherId": null,
+      "questions": []
+    }
+  ],
+  "students": [
+    {
+      "id": "1",
+      "email": "student1@example.com",
+      "name": "Student One",
+      "results": []
+    }
+  ],
   "users": [
     {
       "id": "1",
       "email": "admin@gmail.com",
       "password": "123456",
-      "name": "Admin",
       "role": "teacher",
+      "name": "Admin",
       "token": "admin-token-123"
     },
     {
-      "id": "2",
-      "email": "stu@gmail.com",
+      "id": "6a9c",
+      "name": "jkj",
+      "email": "student@gmail.com",
       "password": "123456",
-      "name": "Student",
       "role": "student",
-      "token": "student-token-456"
-    },
-    {
-      "id": "f0ac",
-      "name": "admin 2",
-      "email": "admin2@gmail.com",
-      "password": "789456",
-      "role": "teacher",
-      "token": "teacher-token-840r3kz5f"
+      "token": "student-token-bbk7yg3ba"
     }
   ]
 }

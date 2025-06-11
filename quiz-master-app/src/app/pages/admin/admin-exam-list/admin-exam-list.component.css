@@ -1,0 +1,24 @@
+.container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+.card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  padding: 1.5rem;
+}
+.exam-list {
+  margin: 1rem 0;
+}
+.exam-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+}
+.exam-actions {
+  display: flex;
+  gap: 0.5rem;
+}
