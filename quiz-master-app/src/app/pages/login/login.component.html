@@ -2,6 +2,19 @@
     <app-auth-form>
         <!-- Login Header -->
         <div class="auth-header">
+            <!-- Logo -->
+            <div class="logo">
+                <div class="logo-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2L3 7L12 12L21 7L12 2Z" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M3 17L12 22L21 17" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                        <path d="M3 12L12 17L21 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+                </div>
+            </div>
             <h1 class="auth-title">Welcome back</h1>
             <p class="auth-subtitle">
                 Don't have an account? <a routerLink="/signup" class="auth-link">Sign up</a>
@@ -12,7 +25,8 @@
             <!-- Email -->
             <div class="form-group">
                 <label for="email" class="form-label">Email</label>
-                <input type="email" id="email" formControlName="email" class="form-input" placeholder="email" required />
+                <input type="email" id="email" formControlName="email" class="form-input" placeholder="email"
+                    required />
             </div>
             <!-- Password -->
             <div class="form-group">
@@ -33,8 +47,8 @@
                         {{ showPassword ? 'Hide' : 'Show' }}
                     </button>
                 </div>
-                <input [type]="showPassword ? 'text' : 'password'" id="password" formControlName="password" placeholder="Password"
-                    class="form-input" required />
+                <input [type]="showPassword ? 'text' : 'password'" id="password" formControlName="password"
+                    placeholder="Password" class="form-input" required />
             </div>
             <!-- Forget Password -->
             <div class="forgot-password">

@@ -1,2 +1,70 @@
-<p>student-dashboard works!</p>
-<button *ngIf="isLoggedIn()" (click)="logout()">Logout</button>
+<div class="layout">
+  <app-sidebar [isMinimized]="sidebarMinimized" [isVisible]="sidebarVisible"></app-sidebar>
+
+  <div class="main-content" [class.minimized]="sidebarMinimized">
+
+    <header class="header">
+      <button class="minimize-btn" (click)="toggleMinimize()" (click)="toggleIcon()" style="cursor: pointer;">
+        <i *ngIf="!isToggled" class="fa-solid fa-angles-right"></i>
+        <i *ngIf="isToggled" class="fa-solid fa-angles-left"></i>
+      </button>
+      <div class="user-info">
+        <strong>Student Dashboard</strong>
+      </div>
+    </header>
+
+    <div class="page-content">
+      <div class="max-w-7xl mx-8">
+        <div
+          class="bg-gradient-to-r from-purple-600 to-indigo-600 my-2 text-white rounded-xl p-6 flex flex-col md:flex-row justify-between items-center shadow-sm">
+          <!-- Image Section -->
+          <div class="md:w-2/5 flex justify-center">
+            <img src="/online-certification-illustration.png" alt="Learning achievement illustration"
+              class="h-40 md:h-52 object-contain" />
+          </div>
+
+          <!-- Text Section -->
+          <div class="md:w-3/5 mb-4 md:mb-0 md:pl-6">
+            <h2 class="text-2xl md:text-3xl font-bold mb-3">Hi Robert Fox! 👋</h2>
+            <p class="text-purple-100 text-base md:text-lg leading-relaxed">
+              Welcome to the Master Exam Platform!
+              Get ready to explore, practice, and ace your exams with confidence — you’ve got this!
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Upcoming Exams Section -->
+      <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 mx-8">
+        <div class="flex justify-between items-center mb-6">
+          <h2 class="text-xl font-semibold text-gray-800">Upcoming Exams</h2>
+          <a routerLink="/student/exams" class="text-sm text-indigo-600 hover:underline">View All</a>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div *ngFor="let exam of upcomingExams"
+            class="border border-gray-200 rounded-lg p-4 hover:border-indigo-300 transition">
+            <div class="flex gap-3 mb-3">
+              <img [src]="getSubjectIcon(exam.subject)" [alt]="exam.subject" class="w-16 h-16" />
+              <div>
+                <h3 class="font-medium text-gray-800">{{ exam.title }}</h3>
+                <p class="text-xs text-gray-500">{{ exam.subject }}</p>
+              </div>
+            </div>
+
+            <div class="flex justify-between text-sm mb-3">
+              <span class="text-gray-600">{{ exam.questions.length }} Questions</span>
+              <span class="text-gray-600">{{ exam.duration }} mins</span>
+            </div>
+            <div class="flex justify-end items-center">
+              <button [routerLink]="['/student/exam', exam.id]"
+                class="text-sm bg-indigo-600 hover:bg-indigo-700 text-white px-3 py-1 rounded">
+                Start
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

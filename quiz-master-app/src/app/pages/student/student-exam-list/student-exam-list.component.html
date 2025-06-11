@@ -1,1 +1,55 @@
-<p>student-exam-list works!</p>
+<div class="layout">
+    <app-sidebar [isMinimized]="sidebarMinimized" [isVisible]="sidebarVisible"></app-sidebar>
+
+    <div class="main-content" [class.minimized]="sidebarMinimized">
+        <header class="header">
+            <button class="minimize-btn" (click)="toggleMinimize()" (click)="toggleIcon()" style="cursor: pointer;">
+                <i *ngIf="!isToggled" class="fa-solid fa-angles-right"></i>
+                <i *ngIf="isToggled" class="fa-solid fa-angles-left"></i>
+            </button>
+            <div class="user-info">
+                <strong>Exams List</strong>
+            </div>
+        </header>
+
+        <div class="page-content">
+            <div class="p-6 space-y-6 text-sm font-medium text-gray-700 border rounded-lg">
+                <div class="max-w-7xl mx-auto px-4 py-8">
+                    <!-- Search + category Filter -->
+                    
+                    <!-- Exam Cards -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div *ngFor="let exam of exams"
+                            class="flex flex-col justify-between p-6 bg-white rounded-xl shadow-sm hover:shadow-md transition border border-gray-100">
+                            <div>
+                                <div class="flex items-center gap-4 mb-4">
+                                    <img [src]="getSubjectIcon(exam.subject)" [alt]="exam.subject" class="w-12 h-12" />
+                                    <div>
+                                        <h3 class="font-semibold text-lg text-gray-800">{{ exam.title }}</h3>
+                                        <div class="flex flex-wrap items-center gap-2 text-xs text-gray-500 mt-1">
+                                            <span class="bg-blue-100 text-blue-700 px-2 py-1 rounded">{{ exam.subject
+                                                }}</span>
+                                            <span class="bg-green-100 text-green-700 px-2 py-1 rounded">{{ exam.duration
+                                                }} mins</span>
+                                            <span class="bg-purple-100 text-purple-700 px-2 py-1 rounded">{{
+                                                exam.questions.length }} questions</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <p class="text-gray-600 text-sm mb-4">
+                                    <span class="font-medium">Due:</span> {{ exam.dueDate | date:'mediumDate' }}
+                                </p>
+                            </div>
+
+                            <button [routerLink]="['/student/exam', exam.id]"
+                                class="w-full bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg transition">
+                                Start Exam
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>

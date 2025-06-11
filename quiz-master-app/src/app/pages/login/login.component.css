@@ -1,7 +1,7 @@
 .auth-container {
   width: 100%;
   max-width: 480px;
-  margin: 0 auto;
+  margin: 2rem auto;
 }
 
 .auth-header {
@@ -199,6 +199,22 @@
 .terms-link:hover {
   color: #007bff;
 }
+
+.logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+.logo-icon {
+  width: 32px;
+  height: 32px;
+  background: linear-gradient(135deg, #007bff, #0056b3);
+  border-radius: 8px;
+  color: white;
+}
+
 
 @media (max-width: 640px) {
   .auth-title {

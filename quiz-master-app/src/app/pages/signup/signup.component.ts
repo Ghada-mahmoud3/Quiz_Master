@@ -31,7 +31,6 @@ export class SignUpComponent {
   onSubmit(): void {
     if (this.signupForm.valid) {
       console.log('Signup data:', this.signupForm.value);
-      // Handle signup logic here
       const { email, password, name, role } = this.signupForm.value;
 
       this.auth.signup(email!, password!, name!, role!).subscribe({

@@ -1,0 +1,31 @@
+.active{
+  background-color: #ecfdf5;
+  color: #059669; 
+  border-right-width: 2px;
+  border-right-color: #10b981;
+  
+}
+
+/* Default state */
+.nav-link .nav-icon {
+  color: #9CA3AF; 
+}
+
+.nav-link .nav-text {
+  color: #4B5563;
+}
+
+/* Active state */
+.nav-link.active .nav-icon {
+  color: #10B981; 
+}
+
+.nav-link.active .nav-text {
+  color: #10B981; 
+}
+
+/* Hover state */
+.nav-link:hover .nav-icon,
+.nav-link:hover .nav-text {
+  color: #111827;
+}

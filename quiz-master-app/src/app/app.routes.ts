@@ -29,7 +29,7 @@ export const routes: Routes = [
   {
     path: 'student',
     canActivate: [AuthGuard],
-    data: { requiredRole: 'student' }, // Add role requirement
+    data: { requiredRole: 'student' }, // role requirement
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: 'dashboard', component: StudentDashboardComponent },
@@ -43,7 +43,7 @@ export const routes: Routes = [
   {
     path: 'admin',
     canActivate: [AuthGuard],
-    data: { requiredRole: 'teacher' }, // Add role requirement
+    data: { requiredRole: 'teacher' }, // role requirement
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       { path: 'dashboard', component: AdminDashboardComponent },

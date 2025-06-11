@@ -1,1 +1,130 @@
-<p>result-list works!</p>
+<div class="layout">
+    <app-sidebar [isMinimized]="sidebarMinimized" [isVisible]="sidebarVisible"></app-sidebar>
+
+    <div class="main-content" [class.minimized]="sidebarMinimized">
+        <header class="header">
+            <button class="minimize-btn" (click)="toggleMinimize()" (click)="toggleIcon()" style="cursor: pointer;">
+                <i *ngIf="!isToggled" class="fa-solid fa-angles-right"></i>
+                <i *ngIf="isToggled" class="fa-solid fa-angles-left"></i>
+            </button>
+            <div class="user-info">
+                <strong>Results List</strong>
+            </div>
+        </header>
+
+        <div class="page-content">
+
+            <div class="relative overflow-x-auto ">
+                <!-- Stats Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-gray-500 text-sm">Enrolled Courses</p>
+                                <p class="text-3xl font-bold text-indigo-600">{{ stats.enrolledCourses }}</p>
+                            </div>
+                            <div class="p-3 bg-indigo-100 rounded-lg">
+                                <i class="fas fa-book text-indigo-600 text-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-gray-500 text-sm">Completed Exams</p>
+                                <p class="text-3xl font-bold text-green-600">{{ stats.completedExams }}</p>
+                            </div>
+                            <div class="p-3 bg-green-100 rounded-lg">
+                                <i class="fas fa-clipboard-check text-green-600 text-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-gray-500 text-sm">Average Score</p>
+                                <p class="text-3xl font-bold text-blue-600">{{ stats.averageScore }}%</p>
+                            </div>
+                            <div class="p-3 bg-blue-100 rounded-lg">
+                                <i class="fas fa-chart-line text-blue-600 text-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-gray-500 text-sm">Attendance</p>
+                                <p class="text-3xl font-bold text-purple-600">{{ stats.attendance }}</p>
+                            </div>
+                            <div class="p-3 bg-purple-100 rounded-lg">
+                                <i class="fas fa-user-check text-purple-600 text-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- All Results Section -->
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                    <h2 class="text-xl font-semibold text-gray-800 mb-6">Recent Results</h2>
+
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th scope="col"
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Exam
+                                    </th>
+                                    <th scope="col"
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Date
+                                    </th>
+                                    <th scope="col"
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Score
+                                    </th>
+                                    <th scope="col"
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status
+                                    </th>
+                                    <th scope="col"
+                                        class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Action
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                <tr *ngFor="let result of recentResults">
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm font-medium text-gray-900">{{ result.title }}</div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <div class="text-sm text-gray-500">{{ result.date | date:'mediumDate' }}</div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2 py-1 text-sm font-semibold rounded-full"
+                                            [ngClass]="getPerformanceClass(result.score)">
+                                            {{ result.score }}%
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span *ngIf="result.score >= 70"
+                                            class="px-2 py-1 text-xs bg-green-100 text-green-800 rounded-full">
+                                            Passed
+                                        </span>
+                                        <span *ngIf="result.score < 70"
+                                            class="px-2 py-1 text-xs bg-red-100 text-red-800 rounded-full">
+                                            Failed
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                        <a [routerLink]="['/student/result', result.examId]"
+                                            class="text-indigo-600 hover:text-indigo-900">View Details</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
